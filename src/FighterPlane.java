@@ -31,10 +31,11 @@ public class FighterPlane {
     private boolean SideBombs;
     // Признак наличия дополнительных бомб
     private boolean BigBombs;
-    // Признак наличия турбины
+    // Признак наличия маленьких бомб
     private boolean MiniBombs;
-
+    // Количество бомб
     private PlaneMissiles missiles;
+
     public FighterPlane(int maxSpeed, float weight, Color mainColor, Color dopColor, boolean frontPlane,
                         boolean sideBombs, boolean bigBombs, boolean miniBombs, int digit) {
         this.MaxSpeed = maxSpeed;
@@ -150,7 +151,7 @@ public class FighterPlane {
         }
     }
 
-    // Отрисовка лодки
+    // Отрисовка самолёта
     public void draw(Graphics g) {
         //переднее оперение
         if (FrontPlane)
