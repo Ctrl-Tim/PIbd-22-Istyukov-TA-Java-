@@ -27,8 +27,7 @@ public class FrameHangar {
         hangarCollection = new HangarCollection(700, 450);
         hangarPanel = new HangarPanel(hangarCollection);
 
-        JButton buttonCreateWarPlane = new JButton("Создать военный самолёт");
-        JButton buttonCreateFighterPlane = new JButton("Создать истребитель");
+        JButton buttonCreateAir = new JButton("Создать самолёт");
         JLabel labelPlace = new JLabel("Место:");
         JLabel labelTakePlane = new JLabel("Забрать самолёт:");
         textFieldTakePlane = new JTextField();
@@ -43,8 +42,7 @@ public class FrameHangar {
         JButton buttonDelHangar = new JButton("Удалить ангар");
 
         frame.getContentPane().add(hangarPanel);
-        frame.getContentPane().add(buttonCreateWarPlane);
-        frame.getContentPane().add(buttonCreateFighterPlane);
+        frame.getContentPane().add(buttonCreateAir);
         frame.getContentPane().add(labelPlace);
         frame.getContentPane().add(labelTakePlane);
         frame.getContentPane().add(textFieldTakePlane);
@@ -64,16 +62,14 @@ public class FrameHangar {
         buttonDelHangar.setBounds(710, 200, 270, 30);
 
         hangarPanel.setBounds(0, 0, 650, 470);
-        buttonCreateWarPlane.setBounds(710, 240, 270, 30);
-        buttonCreateFighterPlane.setBounds(710, 280, 270, 30);
+        buttonCreateAir.setBounds(710, 240, 270, 30);
         labelPlace.setBounds(710, 110, 270, 20);
         labelTakePlane.setBounds(710, 360, 270, 20);
         textFieldTakePlane.setBounds(710, 390, 270, 20);
         buttonGetFromStack.setBounds(710, 420, 130, 30);
         buttonMoveToStack.setBounds(850, 420, 130, 30);
 
-        buttonCreateWarPlane.addActionListener(e -> createWarPlane());
-        buttonCreateFighterPlane.addActionListener(e -> createFighterPlane());
+        buttonCreateAir.addActionListener(e -> createAir());
 
         buttonMoveToStack.addActionListener(e -> takePlane());
         buttonGetFromStack.addActionListener(e -> moveToFrame());
@@ -84,41 +80,17 @@ public class FrameHangar {
         frame.repaint();
     }
 
-    private void createWarPlane() {
-        if (listBoxHangars.getSelectedIndex() >= 0) {
-            JColorChooser colorDialog = new JColorChooser();
-            JOptionPane.showMessageDialog(frame, colorDialog);
-            if (colorDialog.getColor() != null) {
-                WarPlane air = new WarPlane((int) (Math.random() * 100 + 50), (int) (Math.random() * 1000 + 1500), colorDialog.getColor());
-                if (hangarCollection.get(listBoxHangars.getSelectedValue()).plus(air)) {
-                    frame.repaint();
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Ангар переполнен");
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(frame, "Ангар не выбран");
-        }
+    private void createAir() {
+        FrameAirConfig frameAirConfig = new FrameAirConfig(this);
     }
 
-    private void createFighterPlane() {
-        if (listBoxHangars.getSelectedIndex() >= 0) {
-            JColorChooser colorDialog = new JColorChooser();
-            JOptionPane.showMessageDialog(frame, colorDialog);
-            if (colorDialog.getColor() != null) {
-                JColorChooser otherColorDialog = new JColorChooser();
-                JOptionPane.showMessageDialog(frame, otherColorDialog);
-                if (otherColorDialog.getColor() != null) {
-                    FighterPlane air = new FighterPlane((int) (Math.random() * 100 + 50), (int) (Math.random() * 1000 + 1500), colorDialog.getColor(), otherColorDialog.getColor(), true, true, true, true, 2, "Комбинированые");
-                    if (hangarCollection.get(listBoxHangars.getSelectedValue()).plus(air)) {
-                        frame.repaint();
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "Ангар переполнен");
-                    }
-                }
+    public void addAir(Plane air) {
+        if (air != null && listBoxHangars.getSelectedIndex() >= 0) {
+            if (((hangarCollection.get(listBoxHangars.getSelectedValue()).plus(air)))) {
+                frame.repaint();
+            } else {
+                JOptionPane.showMessageDialog(frame, "Самолет не удалось поставить");
             }
-        } else {
-            JOptionPane.showMessageDialog(frame, "Ангар не выбран");
         }
     }
 
