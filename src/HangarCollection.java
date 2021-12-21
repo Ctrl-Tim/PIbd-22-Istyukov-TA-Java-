@@ -30,7 +30,7 @@ public class HangarCollection {
         return null;
     }
 
-    public Plane getPlane(String hangarName, int planeIndex) {
+    public Plane getAir(String hangarName, int planeIndex) {
         if (hangarStages.containsKey(hangarName)) {
             return hangarStages.get(hangarName).getPlane(planeIndex);
         }

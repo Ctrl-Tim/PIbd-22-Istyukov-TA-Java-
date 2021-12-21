@@ -3,18 +3,16 @@ import java.awt.*;
 public class combinedMissiles implements IMissilesForm {
 
     private EnumerationOfMissiles missiles;
-    private Color dopColor;
 
-    public combinedMissiles(int number, Color dopColor) {
+    public combinedMissiles(int number) {
         setDigit(number);
-        this.dopColor = dopColor;
     }
 
     public void setDigit(int number) {
         this.missiles = EnumerationOfMissiles.getChosenNumber(number);
     }
 
-    private void Bombs(Graphics g, int _startPosX, int _startPosY) {
+    public void Bombs(Graphics g, int _startPosX, int _startPosY, Color dopColor) {
         g.setColor(dopColor);
         g.fillPolygon (
                 new int[] {_startPosX + 42, _startPosX + 38, _startPosX + 42, _startPosX + 53,
@@ -29,18 +27,18 @@ public class combinedMissiles implements IMissilesForm {
                         _startPosY + 12, _startPosY + 8, _startPosY + 9}, 7);
     }
 
-    public void draw(Graphics g, int _startPosX, int _startPosY) {
+    public void draw(Graphics g, int _startPosX, int _startPosY, Color dopColor) {
         if(missiles == EnumerationOfMissiles.Two || missiles == EnumerationOfMissiles.Four || missiles == EnumerationOfMissiles.Six){
-            Bombs(g, _startPosX, _startPosY - 3);
-            Bombs(g, _startPosX, _startPosY + 86);
+            Bombs(g, _startPosX, _startPosY - 3, dopColor);
+            Bombs(g, _startPosX, _startPosY + 86, dopColor);
             if(missiles == EnumerationOfMissiles.Four || missiles == EnumerationOfMissiles.Six)
             {
-                Bombs(g, _startPosX, _startPosY);
-                Bombs(g, _startPosX, _startPosY + 83);
+                Bombs(g, _startPosX, _startPosY, dopColor);
+                Bombs(g, _startPosX, _startPosY + 83, dopColor);
                 if(missiles == EnumerationOfMissiles.Six)
                 {
-                    Bombs(g, _startPosX, _startPosY + 3);
-                    Bombs(g, _startPosX, _startPosY + 80);
+                    Bombs(g, _startPosX, _startPosY + 3, dopColor);
+                    Bombs(g, _startPosX, _startPosY + 80, dopColor);
                 }
             }
         }

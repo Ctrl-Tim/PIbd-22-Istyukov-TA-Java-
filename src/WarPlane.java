@@ -108,4 +108,9 @@ public class WarPlane extends Plane {
                 new int[] {_startPosX + 15, _startPosX, _startPosX + 15},
                 new int[] {_startPosY + 45, _startPosY + 51, _startPosY + 58}, 3);
     }
+
+    @Override
+    public void setNewMainColor(Color MainColor){
+        this.MainColor = MainColor;
+    }
 }
