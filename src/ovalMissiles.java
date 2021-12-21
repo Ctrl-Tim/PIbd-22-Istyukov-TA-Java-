@@ -3,18 +3,16 @@ import java.awt.*;
 public class ovalMissiles implements IMissilesForm {
 
     private EnumerationOfMissiles missiles;
-    private Color dopColor;
 
-    public ovalMissiles(int number, Color dopColor) {
+    public ovalMissiles(int number) {
         setDigit(number);
-        this.dopColor = dopColor;
     }
 
     public void setDigit(int number) {
         this.missiles = EnumerationOfMissiles.getChosenNumber(number);
     }
 
-    public void draw(Graphics g, int _startPosX, int _startPosY) {
+    public void draw(Graphics g, int _startPosX, int _startPosY, Color dopColor) {
         g.setColor(Color.BLACK);
         if (missiles == EnumerationOfMissiles.Two || missiles == EnumerationOfMissiles.Four || missiles == EnumerationOfMissiles.Six) {
             g.setColor(dopColor);
