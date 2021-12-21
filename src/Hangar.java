@@ -1,7 +1,11 @@
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Hangar<T extends ITransport, K extends IMissilesForm> {
-    private final Object[] _places;
+    private final List<T> _places;
+
+    private final int _maxCount;
 
     private final int pictureWidth;
 
@@ -15,64 +19,63 @@ public class Hangar<T extends ITransport, K extends IMissilesForm> {
     public Hangar(int picWidth, int picHeight) {
         int width = picWidth / _placeSizeWidth;
         int height = picHeight / _placeSizeHeight;
-        _places = new Object[width * height];
+        _maxCount = width * height;
+        _places = new ArrayList<>();
         pictureWidth = picWidth;
         pictureHeight = picHeight;
     }
 
     public boolean plus(T plane) {
-        for (int i = 0; i < _places.length; i++) {
-            if (_places[i] == null) {
-                plane.SetPosition(3 + i % 3 * _placeSizeWidth, i / 3 * _placeSizeHeight + 6, pictureWidth, pictureHeight);
-                _places[i] = plane;
-                return true;
-            }
+        if (_places.size() < _maxCount)
+        {
+            _places.add(plane);
+            return true;
         }
         return false;
     }
 
     public T minus(int index) {
-        if (_places[index] != null && index >= 0 && index < _places.length) {
-            Object temp = _places[index];
-            _places[index] = null;
-            return (T) (temp);
-        } else {
-            return null;
+        if (index >= 0 && index < _maxCount && _places.get(index) != null)
+        {
+            T truck = _places.get(index);
+            _places.remove(index);
+            return truck;
         }
+        return null;
     }
 
     public boolean bolshe(Hangar<Plane, IMissilesForm> h, Plane plane) {
         int count = 0;
-        for (int i = 0; h._places[i] != null; i++) {
-            if (h._places[i].getClass() == plane.getClass()){
+        for (int i = 0; i < _places.size(); i++) {
+            if (h._places.get(i).getClass() == plane.getClass()){
                 count++;
             }
         }
-
-        return (count > _places.length);
+        return (count > _places.size());
     }
 
     public boolean menshe(Hangar<Plane, IMissilesForm> h, Plane plane) {
         int count = 0;
-        for (int i = 0; h._places[i] != null; i++) {
-            if (h._places[i].getClass() == plane.getClass()){
+        for (int i = 0; i < _places.size(); i++) {
+            if (h._places.get(i).getClass() == plane.getClass()){
                 count++;
             }
         }
+        return (count < _places.size());
+    }
 
-        return (count < h._places.length);
+    public T getPlane(int index) {
+        if (index >= 0 && index < _places.size()) {
+            return _places.get(index);
+        }
+        return null;
     }
 
     public void Draw(Graphics g) {
         DrawMarking(g);
-        for (int i = 0; i < _places.length; i++) {
-            while (_places[i] == null) {
-                i++;
-                if (i == _places.length) {
-                    return;
-                }
-            }
-            ((T) _places[i]).DrawAir(g);
+        for (int i = 0; i < _places.size(); i++) {
+            _places.get(i).SetPosition(10 + _placeSizeWidth * (i % 3), 6 + _placeSizeHeight * (i / 3), pictureWidth, pictureHeight);
+            _places.get(i).DrawAir(g);
         }
     }
 
