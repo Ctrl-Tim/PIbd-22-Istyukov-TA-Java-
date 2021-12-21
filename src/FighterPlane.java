@@ -25,13 +25,13 @@ public class FighterPlane extends WarPlane {
         this.MiniBombs = miniBombs;
         switch (missilesForm) {
             case "Прямоугольные":
-                this.missilesForm = new squareMissiles(missiles, dopColor);
+                this.missilesForm = new squareMissiles(missiles);
                 break;
             case "Овальные":
-                this.missilesForm = new ovalMissiles(missiles, dopColor);
+                this.missilesForm = new ovalMissiles(missiles);
                 break;
             case "Комбинированые":
-                this.missilesForm = new combinedMissiles(missiles, dopColor);
+                this.missilesForm = new combinedMissiles(missiles);
                 break;
         }
     }
@@ -141,9 +141,17 @@ public class FighterPlane extends WarPlane {
         }
         if (MiniBombs)
         {
-            missilesForm.draw(g, _startPosX, _startPosY);
+            missilesForm.draw(g, _startPosX, _startPosY, DopColor);
         }
 
         super.DrawAir(g);
+    }
+
+    public void setNewDopColor(Color DopColor) {
+        this.DopColor = DopColor;
+    }
+
+    public void setFloatForm(IMissilesForm missilesForm){
+        this.missilesForm = missilesForm;
     }
 }

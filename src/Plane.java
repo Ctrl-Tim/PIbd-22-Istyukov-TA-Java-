@@ -55,4 +55,6 @@ public abstract class Plane implements ITransport {
     public abstract void DrawAir(Graphics g);
 
     public abstract void MoveAir(Direction direction);
+
+    public abstract void setNewMainColor(Color MainColor);
 }
