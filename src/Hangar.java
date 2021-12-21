@@ -74,7 +74,7 @@ public class Hangar<T extends ITransport, K extends IMissilesForm> {
     public void Draw(Graphics g) {
         DrawMarking(g);
         for (int i = 0; i < _places.size(); i++) {
-            _places.get(i).SetPosition(10 + _placeSizeWidth * (i % 3), 6 + _placeSizeHeight * (i / 3), pictureWidth, pictureHeight);
+            _places.get(i).SetPosition(10 + _placeSizeWidth * (i % 3), 10 + _placeSizeHeight * (i / 3), pictureWidth, pictureHeight);
             _places.get(i).DrawAir(g);
         }
     }
