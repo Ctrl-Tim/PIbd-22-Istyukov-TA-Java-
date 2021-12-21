@@ -3,14 +3,20 @@ import java.awt.*;
 
 public class FrameFighterPlane {
     private final JFrame frame;
-    private MyPanel myPanel;
+    private GamePanel gamePanel;
     private JComboBox missiles;
     private JComboBox missilesForm;
+
+    public void setPlane(ITransport air) {
+        air.SetPosition((int) (10 + Math.random() * 90), (int) (100 + Math.random() * 100), frame.getWidth(), frame.getHeight());
+        gamePanel.setPlane(air);
+        frame.repaint();
+    }
 
     public FrameFighterPlane() {
         frame = new JFrame("Истребитель");
         frame.setSize(900, 500);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
         frame.setResizable(false);
 
@@ -61,12 +67,9 @@ public class FrameFighterPlane {
         frame.getContentPane().add(missiles);
         missiles.setBounds(10, 45, 90, 30);
 
-    }
-
-    public void addMyPanel(MyPanel panel) {
-        myPanel = panel;
-        frame.getContentPane().add(myPanel);
-        myPanel.setBounds(0, 0, 900, 500);
+        gamePanel = new GamePanel();
+        frame.getContentPane().add(gamePanel);
+        gamePanel.setBounds(0, 0, 900, 500);
         frame.repaint();
     }
 
@@ -74,30 +77,30 @@ public class FrameFighterPlane {
         String name = button.getName();
         switch (name) {
             case "up":
-                myPanel.getPlane().MoveAir(Direction.Up);
+                gamePanel.getPlane().MoveAir(Direction.Up);
                 break;
             case "down":
-                myPanel.getPlane().MoveAir(Direction.Down);
+                gamePanel.getPlane().MoveAir(Direction.Down);
                 break;
             case "left":
-                myPanel.getPlane().MoveAir(Direction.Left);
+                gamePanel.getPlane().MoveAir(Direction.Left);
                 break;
             case "right":
-                myPanel.getPlane().MoveAir(Direction.Right);
+                gamePanel.getPlane().MoveAir(Direction.Right);
                 break;
         }
         frame.repaint();
     }
 
     private void setWarPlane() {
-        myPanel.setPlane(new WarPlane((int) (Math.random() * 100 + 50), (int)(Math.random() * 1000 + 500), Color.RED));
-        myPanel.getPlane().SetPosition((int) (Math.random() * 100 + 10), (int) (Math.random() * 100 + 10), 850, 450);
+        gamePanel.setPlane(new WarPlane((int) (Math.random() * 100 + 50), (int)(Math.random() * 1000 + 500), Color.RED));
+        gamePanel.getPlane().SetPosition((int) (Math.random() * 100 + 10), (int) (Math.random() * 100 + 10), 850, 450);
         frame.repaint();
     }
 
     private void setFighterPlane() {
-        myPanel.setPlane(new FighterPlane((int) (Math.random() * 100 + 50), (int)(Math.random() * 1000 + 500), Color.RED, Color.GREEN, true, true, true, true, missiles.getSelectedIndex(), missilesForm.getSelectedItem().toString()));
-        myPanel.getPlane().SetPosition((int) (Math.random() * 100 + 10), (int) (Math.random() * 100 + 10), 850, 450);
+        gamePanel.setPlane(new FighterPlane((int) (Math.random() * 100 + 50), (int)(Math.random() * 1000 + 500), Color.RED, Color.GREEN, true, true, true, true, missiles.getSelectedIndex(), missilesForm.getSelectedItem().toString()));
+        gamePanel.getPlane().SetPosition((int) (Math.random() * 100 + 10), (int) (Math.random() * 100 + 10), 850, 450);
         frame.repaint();
     }
 }
